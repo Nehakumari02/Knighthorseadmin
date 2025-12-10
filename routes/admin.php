@@ -51,6 +51,7 @@ use App\Models\Admin\SubCategory;
 use App\Http\Controllers\Admin\WishlistController; // <--- ADDED THIS IMPORT
 
 
+
 // All Admin Route Is Here
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -100,12 +101,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('details/{trx_id}', 'details')->name('details');
     });
 
-      Route::controller(OrderLogController::class)->prefix('order-log')->name('order.log.')->group(function () {
+    Route::controller(OrderLogController::class)->prefix('order-log')->name('order.log.')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::get('pending', 'pending')->name('pending');
         Route::get('complete', 'complete')->name('complete');
         Route::get('canceled', 'canceled')->name('canceled');
         Route::get('details/{trx_id}', 'details')->name('details');
+        Route::get('download/{trx_id}', 'downloadPdf')->name('download');
     });
 
 
@@ -123,7 +125,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('edit/{uuid}', 'edit')->name('edit');
             Route::post('update/{uuid}', 'update')->name('update');
             Route::put('status/update', 'statusUpdate')->name('status.update');
-            Route::post('test-code/send','sendTestSMS')->name('test.code.send');
+            Route::post('test-code/send', 'sendTestSMS')->name('test.code.send');
         });
     });
 
@@ -200,7 +202,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // product  Section
     Route::controller(ProductController::class)->prefix('product')->name('product.')->group(function () {
         Route::get('index', 'index')->name('index');
-         Route::get('filter', 'searchProduct')->name('filter');
+        Route::get('filter', 'searchProduct')->name('filter');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
         Route::put('status/update', 'statusUpdate')->name('status.update');
@@ -209,7 +211,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('delete', 'delete')->name('delete');
     });
 
-   
+
     Route::controller(WishlistController::class)->prefix('wishlist')->name('wishlist.')->group(function () {
         Route::get('/', 'index')->name('index');
     });
@@ -231,7 +233,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('send/mail/{username}', 'sendMail')->name('send.mail')->middleware("mail");
         Route::post('login-as-member/{username?}', 'loginAsMember')->name('login.as.member');
         Route::post('search', 'search')->name('search');
-        Route::post('wallet/balance/update/{username}','walletBalanceUpdate')->name('wallet.balance.update');
+        Route::post('wallet/balance/update/{username}', 'walletBalanceUpdate')->name('wallet.balance.update');
     });
 
 
@@ -479,7 +481,7 @@ Route::get('admin/pusher/beams-auth', function (Request $request) {
     $beamsClient = new PushNotifications(
         array(
             "instanceId" => $notification_config->instance_id,
-            "secretKey"  => $notification_config->primary_key,
+            "secretKey" => $notification_config->primary_key,
         )
     );
     $publisherUserId = make_user_id_for_pusher("admin", $userID);

@@ -8,12 +8,13 @@ use App\Models\Admin\OrderItem;
 use App\Models\Admin\Product;
 use App\Models\Admin\ProductOrder;
 use App\Models\Admin\OrderShipment; // Added missing import
-use App\Models\User; 
-use App\Models\UserWallet; 
-use App\Models\Admin\BasicSettings; 
+use App\Models\User;
+use App\Models\UserWallet;
+use App\Models\Admin\BasicSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
+use PDF; // <--- IMPORTANT: Ensure this is imported
 
 class OrderLogController extends Controller
 {
@@ -23,7 +24,7 @@ class OrderLogController extends Controller
     private function getFilteredQuery()
     {
         $admin = auth()->guard('admin')->user();
-        
+
         $query = ProductOrder::with(
             'user:id,firstname,email,username,mobile',
             'gateway_currency:id,name'
@@ -33,8 +34,8 @@ class OrderLogController extends Controller
         // Verify your Super Admin username here. 
         // If your main admin login is "admin", change 'superadmin' to 'admin'.
         if ($admin->username !== 'superadmin') {
-            
-            $query->whereHas('user', function($q) use ($admin) {
+
+            $query->whereHas('user', function ($q) use ($admin) {
                 // FIXED: Compares assign_to with the Admin's USERNAME
                 $q->where('assign_to', $admin->username);
             });
@@ -71,7 +72,7 @@ class OrderLogController extends Controller
 
         $transactions = $this->getFilteredQuery();
         $transactions = $transactions->where('status', 2)->paginate(20);
-   
+
         return view('admin.sections.order-log.index', compact(
             'page_title',
             'transactions'
@@ -116,18 +117,18 @@ class OrderLogController extends Controller
     public function details(Request $request, $trx_id)
     {
         $page_title = "Booking Details";
-        
+
         // --- SECURITY CHECK START ---
         $admin = auth()->guard('admin')->user();
         $query = ProductOrder::with(['payment_gateway', 'shipments.shipment']);
 
         if ($admin->username !== 'superadmin') {
-            $query->whereHas('user', function($q) use ($admin) {
+            $query->whereHas('user', function ($q) use ($admin) {
                 // FIXED: Filter by Username
                 $q->where('assign_to', $admin->username);
             });
         }
-        
+
         $data = $query->where('trx_id', $trx_id)->first();
         // --- SECURITY CHECK END ---
 
@@ -153,8 +154,8 @@ class OrderLogController extends Controller
     public function statusUpdate(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'status'    => 'required|integer',
-            'trxId'     => 'required'
+            'status' => 'required|integer',
+            'trxId' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -166,26 +167,26 @@ class OrderLogController extends Controller
         $query = ProductOrder::with(['payment_gateway']);
 
         if ($admin->username !== 'superadmin') {
-            $query->whereHas('user', function($q) use ($admin) {
+            $query->whereHas('user', function ($q) use ($admin) {
                 // FIXED: Filter by Username
                 $q->where('assign_to', $admin->username);
             });
         }
-        
+
         $data = $query->where('trx_id', $request->trxId)->first();
         // --- SECURITY CHECK END ---
 
         if (!$data) {
-            return back()->with(['error' =>  ['Data Not Found or Access Denied!']]);
+            return back()->with(['error' => ['Data Not Found or Access Denied!']]);
         }
 
         // Logic to restore product quantity
-        if(isset($data->booking_data->data->user_cart)) {
-             $user_cart = $data->booking_data->data->user_cart;
-             foreach ($user_cart->data as $item) {
-                $id                 = $item->id;
-                $product            = Product::where('id', $id)->first();
-                if($product){
+        if (isset($data->booking_data->data->user_cart)) {
+            $user_cart = $data->booking_data->data->user_cart;
+            foreach ($user_cart->data as $item) {
+                $id = $item->id;
+                $product = Product::where('id', $id)->first();
+                if ($product) {
                     $available_quantity = $product->available_quantity;
                     $product->update([
                         'available_quantity' => $available_quantity + $item->quantity,
@@ -194,18 +195,18 @@ class OrderLogController extends Controller
             }
         }
 
-        $validated     = $validator->validate();
-        
+        $validated = $validator->validate();
+
         // Refund logic
         try {
             $data->update([
-                'status'    => $validated['status'],
+                'status' => $validated['status'],
             ]);
 
-            if ($request->status == '4' &&  $data->type != "cash") {
+            if ($request->status == '4' && $data->type != "cash") {
                 // Refund to User Wallet
                 $user = User::where('id', $data->user_id)->first();
-                if($user){
+                if ($user) {
                     // Increment is safer than fetching and adding manually
                     UserWallet::where('user_id', $user->id)->increment('balance', $data->price);
                 }
@@ -214,6 +215,26 @@ class OrderLogController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
 
-        return redirect()->route('admin.booking.log.index')->with(['success'  => ['Booking Status Updated Successfully.']]);
+        return redirect()->route('admin.booking.log.index')->with(['success' => ['Booking Status Updated Successfully.']]);
+    }
+    public function downloadPdf($trx_id)
+    {
+        // 1. Fetch Order with Security Check
+        $admin = auth()->guard('admin')->user();
+        $query = ProductOrder::with(['user', 'payment_gateway']);
+
+        if ($admin->username !== 'superadmin') {
+            $query->whereHas('user', function ($q) use ($admin) {
+                $q->where('assign_to', $admin->username);
+            });
+        }
+
+        $transaction = $query->where('trx_id', $trx_id)->firstOrFail();
+
+        // 2. Load the specific Blade view for PDF
+        $pdf = PDF::loadView('admin.sections.order-log.invoice-pdf', compact('transaction'));
+
+        // 3. Download
+        return $pdf->download('Invoice_' . $trx_id . '.pdf');
     }
 }

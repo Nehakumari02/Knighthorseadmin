@@ -35,7 +35,9 @@
                             <th>{{ __('Category') }}</th>
                             <th>{{ __('Sub Category') }}</th>
                             <th>Product Name</th>
-                            <th>Quantity</th> {{-- Quantity Header --}}
+                            <th>Quantity</th>
+                            <th>{{ __('Action') }}</th> </tr>
+                             {{-- Quantity Header --}}
                             {{-- <th>Price</th> --}} {{-- <th>Image</th> --}} </tr>
                     </thead>
                     <tbody>
@@ -133,6 +135,14 @@
                                             @endif
                                         </span>
                                     </td>
+                                    @if($index === 0)
+                                        <td rowspan="{{ $itemCount }}" class="align-middle text-center">
+                                            {{-- Ensure you create this route in web.php --}}
+                                            <a href="{{ setRoute('admin.order.log.download', $transaction->trx_id) }}" class="btn btn--base btn-sm" target="_blank" title="Download PDF">
+    <i class="las la-file-download"></i> PDF
+</a>
+                                        </td>
+                                    @endif
 
                                     {{-- Price & Image (Hidden) --}}
                                     {{-- <td>Rs {{ number_format($item->price ?? 0, 2) }}</td> --}}
