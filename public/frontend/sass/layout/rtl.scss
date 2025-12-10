@@ -1,0 +1,141 @@
+.rtl{
+    direction: rtl;
+
+
+
+    .header-threedot-btn{
+        left: -10px;
+        right: auto;
+    }
+    .header-mobile-search-form .header-search-btn{
+        left: 0;
+        right: auto;
+    }
+    .header-mobile-search-form input{
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+    .banner-section{
+        direction: ltr;
+    }
+    .testimonial-section{
+        direction: ltr;
+    }
+    .skill-bar .progressbar .right{
+        left: -60px;
+        right: auto;
+    }
+    .skill-bar .progressbar .left{
+        right: -34px;
+    }
+    .skill-bar .progressbar{
+        right: 2%;
+        left: 0;
+        @media only screen and (max-width: 420px) {
+            right: 10%;
+          }
+    }
+    .skill-bar .bar{
+        right: 0;
+        left: auto;
+    }
+    .skill-bar .label {
+        left: auto;
+        right: 0;
+    }
+    .skill-bar .label::after{
+        right: -10px;
+    }
+    .modal-header .btn-close{
+        margin-left: 0;
+    }
+    .brand-slider{
+        direction: ltr;
+    }
+    .header-bottom-area{
+        padding-left: 0px;
+        padding-right: 20px;
+    }
+    .cart-btn-wrapper{
+        margin-right: 0;
+        margin-left: 15px;
+    }
+    .sidebar{
+        right: 0px;
+        
+    }
+    .sidebar.active{
+        right: -230px;
+    }
+    .body-wrapper.active .custom-section{
+        padding-right: 30px;
+    }
+    .custom-section{
+        padding-right: 245px;
+        padding-left: 15px;
+        
+    }
+    .sidebar-menu .sidebar-menu-item a .menu-title{
+        padding-right: 10px;
+        padding-left: 0;
+    }
+
+    .sidebar-menu .sidebar-menu-item.sidebar-dropdown a::after{
+        left: 20px;
+        right: auto;
+        transform: rotate(180deg);
+        @media only screen and (max-width: 667px) {
+            top: 6px;
+            left: -5px;
+          }
+    }
+    .sidebar-menu .sidebar-menu-item.active a::after{
+        transform: rotate(90deg);
+    }
+    .cart-item .cart-content .cart-title{
+        margin-left: 0px;
+        margin-right: 15px;
+        @media only screen and (max-width: 380px){
+            padding-right: 8px;
+         }
+    }
+    .show-pass{
+        left: 25px;
+        right: auto;
+    }
+    .custom-check-group label::before{
+        margin-left: 8px;
+        margin-right: 0px;
+    }
+    .order-details .my-order .left-side .Shipments{
+        padding-left: 0px;
+        padding-right: 8px;
+    }
+    .custom-check-group input:checked + label::after{
+        right: 7px;
+    }
+    .card-header-user-content{
+        padding-left: 0px;
+        padding-right: 10px;
+    }
+    .show_hide_password{
+        input{
+          padding-left: 40px;
+          padding-right: 22px;
+        }
+      }
+      .profile-thumb-content .profile-thumb .avatar-edit{
+        left: 0;
+        right: auto;
+      }
+      .profile-wrapper{
+        left: 0;
+        right: auto;
+        border-radius: 0px 10px 10px 0px;
+      }
+      .profile-wrapper li:last-child{
+        border-bottom: none;
+      }
+
+
+}

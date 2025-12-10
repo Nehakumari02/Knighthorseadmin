@@ -1,0 +1,66 @@
+/*-------------------------------------------------
+    [ ### font-variable start ]
+*/
+$font-heading: 'Outfit', sans-serif;
+$font_body: 'Outfit', sans-serif;
+/*-------------------------------------------------
+    [ ### font-variable end ]
+*/
+
+/*-------------------------------------------------
+    [ ### font_family-variable start ]
+*/
+$font-awesome: 'Font Awesome 5 Free';
+/*-------------------------------------------------
+    [ ### font_family-variable end ]
+*/
+
+/*-------------------------------------------------
+    [ ### font_size-variable start ]
+*/
+$base__font-size: 18px;
+$heading__one: 55px;
+$heading__two: 35px;
+$heading__three: 22px;
+$heading__four: 18px;
+$heading__five: 14px;
+$heading__six: 12px;
+/*-------------------------------------------------
+    [ ### font_size-variable end ]
+*/
+
+/*-------------------------------------------------
+    [ ### line_height-variable start ]
+*/
+$font__line-height-body: 1.5em;
+$font__line-height-heading: 1.3em;
+$font__line-height-paragraph: 1.7em;
+$font__line-height-pre: 1.6em;
+/*-------------------------------------------------
+    [ ### line_height-variable start ]
+*/
+
+/*-------------------------------------------------
+    [ ### initial-color-variable start ]
+*/
+$white: #ffffff; // white color
+$color--heading: #000000f0; // Heading color
+$color--text:#000000e6 ; // Text color
+$base--color: #fdd670; // Base color
+$hover--color:#10b981;
+$second-color:#1b334d;
+$placeholder--color:#c4c4c4;
+$shadow--color:#434343;
+$border--base:#bfbcbc; // Border base color
+$section--bg: #dadada78; // Section bg color
+$body--bg: #f5f5f5; // Body bg color
+$bg--gray: #a9a4a4; // Gray bg color
+$btn--bg: #fdd670; //btn bg
+$bg--from: #10b981; //
+
+/*-------------------------------------------------
+    [ ### initial-color-variable end ]
+*/
+
+// <span class="text--danger">$20</span>
+//      <span class="mrp">$28</span>            

@@ -1,0 +1,90 @@
+/*-------------------------------------------------
+    [ ## banner ]
+*/
+.banner-section{
+    overflow: hidden;
+}
+.banner-slider{
+    .swiper-android .swiper-slide, .swiper-wrapper {
+        transform: translateZ(0);
+    }
+}
+.banner-wrapper{
+    padding: 40px;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    @media only screen and (max-width: 1199px) {
+        padding: 0px;
+    }
+    .client-details{
+        width: 100%;
+            img{
+                width: 70px;
+                border-radius: 50%;
+            }
+            p{
+                font-size: 14px;
+                margin: 0px;
+            }
+        }
+    }
+.banner-thumb{
+    position: relative;
+    width: 168px;
+    img{
+        border-radius: 1.25rem;
+    }
+    .banner-quote{
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        width: 60px;
+        height: 60px;
+        line-height: 50px;
+        background-color: $base--color;
+        border: 5px solid $bg--gray;
+        border-radius: 50%;
+        text-align: center;
+        .fill-white{
+            fill: $white;
+        }
+    }
+}
+.banner-content{
+    width: calc(100% - 168px);
+    padding-left: 30px;
+    @media only screen and (max-width: 991px) {
+        width: 100%;
+        padding-left: 0;
+        padding-top: 20px;
+    }
+    .banner-ratings{
+        margin-bottom: 15px;
+        i{
+            color: #feb240;
+        }
+    }
+    p{
+        font-size: 18px;
+    }
+    .banner-user-content{
+        .title{
+            span{
+                color: $base--color;
+            }
+        }
+    }
+}
+
+/*-------------------------------------------------
+    [ ## Testimonial ]
+*/
+.testimonial-section {
+    overflow: hidden !important;
+}
+.brand-section{
+    overflow: hidden;
+}
+
+

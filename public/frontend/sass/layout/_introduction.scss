@@ -1,0 +1,43 @@
+.home-baner{
+    position: relative;
+    padding: 40px;
+    .baner-area{
+        .baner-img{
+            img{
+                width: 80%;
+            }
+        }
+    }
+    .baner-element{
+        position: absolute;
+        top: -50px;
+    }
+}
+.about-baner{
+    .bg-img{
+        position: relative;
+        .content{
+            position: absolute;
+            top: 40%;
+            left: 10%;
+        }
+        img{
+            width: 100%;
+            border-radius: 20px;
+        }
+    }
+}
+.service-baner{
+    .bg-img{
+        position: relative;
+        .content{
+            position: absolute;
+            top: 40%;
+            left: 10%;
+        }
+        img{
+            width: 100%;
+            border-radius: 20px;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+@extends('frontend.layouts.master')
+@push('css')
+@endpush
+@section('content')
+    @include('frontend.section.banner-slider')
+    @include('frontend.section.special-offer')
+    @include('frontend.section.popular-products')
+    @include('frontend.section.brand')
+    @include('frontend.section.download-app')
+     @include('frontend.section.footer')
+@endsection
+@push('script')
+@endpush
